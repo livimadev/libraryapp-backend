@@ -6,9 +6,13 @@ Este proyecto es desarrollado como parte del curso <b>Soluciones Web y Aplicacio
 
 ## Versiones
 Project: Maven
+
 Language: Java
+
 Spring Boot: 3.4.4
-Packaging:jav
+
+Packaging:jar
+
 Java: 21
 
 ## Documentación

@@ -1,7 +1,9 @@
 package com.lectorium.controller;
 
+import java.net.URI;
 import java.util.List;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,6 +18,7 @@ import com.lectorium.model.Publisher;
 import com.lectorium.service.IPublisherService;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 // https://localhost:9090/publishers
 @RestController
@@ -26,31 +29,46 @@ import lombok.RequiredArgsConstructor;
 public class PublisherController {
 	//@Autowired
 	private final IPublisherService service;
-	
+
 	@GetMapping
-	public List<Publisher> findAll() throws Exception{
-		return service.findAll();
+	public ResponseEntity<List<Publisher>> findAll() throws Exception{
+		//return service.findAll();
+		List<Publisher> list = service.findAll();
+		return ResponseEntity.ok(list);
 	}
-	
+
 	@GetMapping("/{id}")
-	public Publisher findById(@PathVariable("id") Integer id) throws Exception{
-		return service.findById(id);
+	public ResponseEntity<Publisher> findById(@PathVariable("id") Integer id) throws Exception{
+		Publisher obj =  service.findById(id);
+		return ResponseEntity.ok(obj);
 	}
 
 	@PostMapping
-	public Publisher save(@RequestBody Publisher publisher) throws Exception{
-		return service.save(publisher);
+	public ResponseEntity<Publisher> save(@RequestBody Publisher publisher) throws Exception{
+		Publisher obj =  service.save(publisher);
+		//return ResponseEntity.ok(obj);
+
+		// location: http://localhost:9090/publishers/{id}
+		URI location = ServletUriComponentsBuilder
+				.fromCurrentRequest()
+				.path("/{id}")
+				.buildAndExpand(obj.getIdPublisher()).toUri();
+		return ResponseEntity.created(location).build();
 	}
-	
+
 	@PutMapping("/{id}")
-	public Publisher update(@PathVariable("id") Integer id, @RequestBody Publisher publisher) throws Exception{
-		return service.update(publisher, id);
+	public ResponseEntity<Publisher> update(@PathVariable("id") Integer id, @RequestBody Publisher publisher) throws Exception{
+		Publisher obj =  service.update(publisher, id);
+		return ResponseEntity.ok(obj);
 	}
-	
+
 	@DeleteMapping("/{id}")
-	public void delete(@PathVariable("id") Integer id) throws Exception{
+	public ResponseEntity<Void> delete(@PathVariable("id") Integer id)
+			throws Exception{
 		service.delete(id);
+		return ResponseEntity.noContent().build();
 	}
+
 	/*
 	public PublisherController(PublisherServiceImpl service) {
 		this.service = service;

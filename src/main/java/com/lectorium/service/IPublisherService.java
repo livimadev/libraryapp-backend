@@ -1,9 +1,12 @@
 package com.lectorium.service;
 
-import java.util.List;
-
 import com.lectorium.model.Publisher;
 
+public interface IPublisherService extends IGenericService<Publisher, Integer>{
+
+}
+
+/*
 public interface IPublisherService {
 	//Publisher saveAndValid(Publisher publisher);
 	Publisher save(Publisher publisher) throws Exception;
@@ -12,3 +15,4 @@ public interface IPublisherService {
 	Publisher findById(Integer id) throws Exception;
 	void delete(Integer id) throws Exception;
 }
+ */

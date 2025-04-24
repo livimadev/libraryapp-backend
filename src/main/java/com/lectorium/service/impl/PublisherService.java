@@ -1,24 +1,29 @@
-package com.lectorium.service;
+package com.lectorium.service.impl;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import com.lectorium.repo.IGenericRepo;
+import com.lectorium.service.IPublisherService;
 import org.springframework.stereotype.Service;
 
 import com.lectorium.model.Publisher;
 import com.lectorium.repo.IPublisherRepo;
-import com.lectorium.repo.PublisherRepoImpl;
 
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 
 @Service
 //@AllArgsConstructor
 @RequiredArgsConstructor
-public class PublisherServiceImpl implements IPublisherService {
+public class PublisherService extends GenericService<Publisher, Integer> implements IPublisherService {
 	//@Autowired
 	private final IPublisherRepo repo;
 
+	@Override
+	protected IGenericRepo<Publisher, Integer> getRepo() {
+		return repo;
+	}
+
+	/*
 	@Override
 	public Publisher save(Publisher publisher) throws Exception {
 		return repo.save(publisher);
@@ -46,7 +51,7 @@ public class PublisherServiceImpl implements IPublisherService {
 		repo.deleteById(id);
 	}
 	
-	
+	*/
 	
 	/*public PublisherServiceImpl(PublisherRepoImpl repo) {
 		this.repo = repo;
