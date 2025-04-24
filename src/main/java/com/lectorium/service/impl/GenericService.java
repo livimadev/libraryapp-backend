@@ -1,5 +1,6 @@
 package com.lectorium.service.impl;
 
+import com.lectorium.exception.ModelNotFoundException;
 import com.lectorium.repo.IGenericRepo;
 import com.lectorium.service.IGenericService;
 
@@ -16,6 +17,7 @@ public abstract class GenericService<T,ID> implements IGenericService<T,ID> {
     @Override
     public T update(T t, ID id) throws Exception {
         // TODO verificar el id de la entidad
+        getRepo().findById(id).orElseThrow(()-> new ModelNotFoundException("ID NOT FOUND: " + id));
         return getRepo().save(t);
     }
 
@@ -26,11 +28,12 @@ public abstract class GenericService<T,ID> implements IGenericService<T,ID> {
 
     @Override
     public T findById(ID id) throws Exception {
-        return getRepo().findById(id).orElse(null);
+        return getRepo().findById(id).orElseThrow(()-> new ModelNotFoundException("ID NOT FOUND: " + id));
     }
 
     @Override
     public void delete(ID id) throws Exception {
+        getRepo().findById(id).orElseThrow(()-> new ModelNotFoundException("ID NOT FOUND: " + id));
         getRepo().deleteById(id);
     }
 }
