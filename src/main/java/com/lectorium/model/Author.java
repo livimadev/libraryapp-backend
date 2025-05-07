@@ -12,6 +12,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity(name="authors")
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Author {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
