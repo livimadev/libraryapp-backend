@@ -1,8 +1,10 @@
 package com.lectorium.controller;
 
+import com.lectorium.dto.AuthorDTO;
 import com.lectorium.model.Author;
 import com.lectorium.service.IAuthorService;
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -18,8 +20,11 @@ public class AuthorController {
     private final IAuthorService service;
 
     @GetMapping
-    public ResponseEntity<List<Author>> findAll() throws Exception{
-        List<Author> list = service.findAll();
+    public ResponseEntity<List<AuthorDTO>> findAll() throws Exception{
+        ModelMapper modelMapper = new ModelMapper();
+        // List<Author> list = service.findAll();
+        //List<AuthorDTO> list = service.findAll().stream().map(e -> new AuthorDTO(e.getIdAuthor(), e.getLastName(), e.getFirstName(), e.getBirthdate(), e.getPlaceBirthdate())).toList();
+        List<AuthorDTO> list = service.findAll().stream().map(e -> modelMapper.map(e, AuthorDTO.class)).toList();
         return ResponseEntity.ok(list);
     }
 
