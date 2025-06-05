@@ -8,6 +8,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -38,6 +39,8 @@ public class PublisherController {
 	private final IPublisherService service;
 	private final ModelMapper modelMapper;
 
+	//@PreAuthorize("hasAuthority('ADMIN') or hasAuthority('USER)")
+	@PreAuthorize("@authorizeLogic.hasAccess('findAll')")
 	@GetMapping
 	public ResponseEntity<List<PublisherDTO>> findAll() throws Exception{
 		// ModelMapper modelMapper = new ModelMapper();
