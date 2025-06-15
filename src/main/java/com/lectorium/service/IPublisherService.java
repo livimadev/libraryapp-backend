@@ -1,9 +1,12 @@
 package com.lectorium.service;
 
 import com.lectorium.model.Publisher;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
 
 public interface IPublisherService extends IGenericService<Publisher, Integer>{
-
+    Page<Publisher> listPage(Pageable pageable);
 }
 
 /*

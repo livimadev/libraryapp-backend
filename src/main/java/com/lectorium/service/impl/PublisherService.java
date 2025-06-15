@@ -4,6 +4,8 @@ import java.util.List;
 
 import com.lectorium.repo.IGenericRepo;
 import com.lectorium.service.IPublisherService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.lectorium.model.Publisher;
@@ -21,6 +23,11 @@ public class PublisherService extends GenericService<Publisher, Integer> impleme
 	@Override
 	protected IGenericRepo<Publisher, Integer> getRepo() {
 		return repo;
+	}
+
+	@Override
+	public Page<Publisher> listPage(Pageable pageable) {
+		return repo.findAll(pageable);
 	}
 
 	/*

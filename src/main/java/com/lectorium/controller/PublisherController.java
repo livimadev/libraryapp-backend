@@ -5,6 +5,8 @@ import java.util.List;
 
 import com.lectorium.dto.PublisherDTO;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.http.ResponseEntity;
@@ -115,6 +117,13 @@ public class PublisherController {
 
 	private Publisher convertToEntity(PublisherDTO dto){
 		return modelMapper.map(dto, Publisher.class);
+	}
+
+	@GetMapping("/pageable")
+	public ResponseEntity<Page<Publisher>> listPage(Pageable pageable){
+		Page<Publisher> page = service.listPage(pageable);
+
+		return ResponseEntity.ok(page);
 	}
 	/*
 	public PublisherController(PublisherServiceImpl service) {
