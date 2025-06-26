@@ -4,7 +4,9 @@ import java.net.URI;
 import java.util.List;
 
 import com.lectorium.dto.PublisherDTO;
+import jakarta.validation.Valid;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.hateoas.EntityModel;
@@ -39,6 +41,8 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 public class PublisherController {
 	//@Autowired
 	private final IPublisherService service;
+
+	@Qualifier("defaultMapper")
 	private final ModelMapper modelMapper;
 
 	//@PreAuthorize("hasAuthority('ADMIN') or hasAuthority('USER)")
@@ -64,7 +68,7 @@ public class PublisherController {
 	}
 
 	@PostMapping
-	public ResponseEntity<Void> save(@RequestBody PublisherDTO dto) throws Exception{
+	public ResponseEntity<Void> save(@Valid @RequestBody PublisherDTO dto) throws Exception{
 		//Publisher obj =  service.save(publisher);
 		//Publisher obj = service.save(modelMapper.map(dto, Publisher.class));
 		Publisher obj = service.save(convertToEntity(dto));
@@ -79,7 +83,7 @@ public class PublisherController {
 	}
 
 	@PutMapping("/{id}")
-	public ResponseEntity<PublisherDTO> update(@PathVariable("id") Integer id, @RequestBody PublisherDTO dto) throws Exception{
+	public ResponseEntity<PublisherDTO> update(@Valid @PathVariable("id") Integer id, @RequestBody PublisherDTO dto) throws Exception{
 		//Publisher obj =  service.update(modelMapper.map(dto,Publisher.class), id);
 		//PublisherDTO dto1 = modelMapper.map(obj, PublisherDTO.class);
 		//return ResponseEntity.ok(dto1);
